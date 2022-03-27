@@ -9,6 +9,7 @@ import modalStyleReducer from "./reducers/modalStyle";
 import nodeCreatorReducer from "./reducers/nodeCreator";
 import currentIndexReducer from "./reducers/currentIndexReducer";
 import adjacencyMatrixReducer from "./reducers/adjacencyMatrix";
+import popperCreatorReducer from "./reducers/popperCreator";
 
 const reducer = combineReducers({
     cytoscapeData: cytoscapeReducer,
@@ -19,7 +20,9 @@ const reducer = combineReducers({
     modalStyle: modalStyleReducer,
     nodeCreator: nodeCreatorReducer,
     currentIndex: currentIndexReducer,
-    adjacencyMatrix: adjacencyMatrixReducer
+    adjacencyMatrix: adjacencyMatrixReducer,
+    popperCreator: popperCreatorReducer
+
 });
 
 const store = createStore(reducer, composeWithDevTools());

@@ -12,6 +12,7 @@ import { setMatrixDisplay } from "../../redux/actions/adjacencyMatrix";
 import AdjacencyMatrix from "../AdjacencyMatrix/AdjacencyMatrix";
 import "./Modal.css";
 
+
 const Modal = () => {
     const dispatch = useDispatch();
     const textInput = useSelector((state) => state.textInput);
@@ -21,6 +22,7 @@ const Modal = () => {
     const cytoscapeData = useSelector(
         (state) => state.cytoscapeData[currentIndex]
     );
+    const newPopper = useSelector((state) => state.popperCreator);
     const newNode = useSelector((state) => state.nodeCreator);
     const newEdge = useSelector((state) => state.edgeCreator);
     const edgeIds = useSelector((state) => state.edgeIds);
@@ -60,6 +62,8 @@ const Modal = () => {
         message = "Ingrese el nombre del vértice:";
     } else if (toolbar.edge === true) {
         message = "Ingrese el costo de la arista:";
+    } else if (toolbar.popper === true){
+        message = "Ingrese valor de popper";
     }
 
     const change = (e) => {
@@ -140,12 +144,37 @@ const Modal = () => {
         }
     };
 
+    const addPopper = () =>{
+        let node = newPopper.node;
+        let popper1 = node.popper({
+            content: () => {
+                var div = document.createElement('div');
+                // div.classList.add('popper-div');
+                div.innerHTML = textInput;
+                document.body.appendChild( div );
+                return div;
+            },
+            popper: {
+                placement: 'bottom'
+            }
+        });
+        let update = () => {
+            popper1.update();
+        };
+        node.on('position', update);
+        cy.on('pan zoom resize', update);
+        dispatch(setDisplay("none"));
+        dispatch(setText(""));
+    };
+
     const submit = (e) => {
         e.preventDefault();
         if (toolbar.node === true) {
             addNode();
         } else if (toolbar.edge === true) {
             addEdge();
+        } else if (toolbar.popper === true){
+            addPopper();
         }
     };
 

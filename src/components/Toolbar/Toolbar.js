@@ -7,6 +7,7 @@ import {
     setEdgeActive,
     setEraserActive,
     disableAll,
+    setPopperActive,
 } from "../../redux/actions/toolbar";
 import { nextIndex, previousIndex } from "../../redux/actions/currentIndex";
 import { setTargetNode, setSourceNode } from "../../redux/actions/edgeCreator";
@@ -22,6 +23,7 @@ const Toolbar = () => {
     const nodeSelected = toolbar.node;
     const edgeSelected = toolbar.edge;
     const eraserSelected = toolbar.eraser;
+    const popperSelected = toolbar.popper;
 
     const setNode = () => {
         dispatch(disableAll());
@@ -58,6 +60,13 @@ const Toolbar = () => {
         }
     };
 
+    const setPopper = () => {
+        dispatch(disableAll());
+        dispatch(setTargetNode(""));
+        dispatch(setSourceNode(""));
+        dispatch(setPopperActive());
+    }
+
     return (
         <div className="tool-bar">
             <button
@@ -75,6 +84,13 @@ const Toolbar = () => {
                 <img src="/img/arista.png" alt="aris" />
             </button>
             <button
+                title="Agregar popper"
+                onClick={setPopper}
+                className={popperSelected ? "selected" : ""}
+            >
+                <img src="/img/arista.png" alt="aris" />
+            </button>
+            <button
                 title="Borrar elemento"
                 onClick={setEraser}
                 className={eraserSelected ? "selected" : ""}
@@ -87,6 +103,7 @@ const Toolbar = () => {
             <button title="Rehacer" onClick={redoAction}>
                 <img src="/img/redo.png" alt="logo-redo" />
             </button>
+            
         </div>
     );
 };

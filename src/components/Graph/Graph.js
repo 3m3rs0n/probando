@@ -4,6 +4,7 @@ import { addState } from "../../redux/actions/cytoscape";
 import { setSourceNode, setTargetNode } from "../../redux/actions/edgeCreator";
 import { setDisplay } from "../../redux/actions/modalStyle";
 import { setNewNodePosition } from "../../redux/actions/nodeCreator";
+import { setNewPopperPosition } from "../../redux/actions/popperCreator";
 import { nextIndex } from "../../redux/actions/currentIndex";
 import cytoscape from "cytoscape";
 import popper from 'cytoscape-popper';
@@ -21,13 +22,7 @@ const Graph = () => {
 
     const [cy, setCy] = useState(cytoscape());
 
-    var makeDiv = function(text){
-        var div = document.createElement('div');
-        // div.classList.add('popper-div');
-        div.innerHTML = text;
-        document.body.appendChild( div );
-        return div;
-    };
+    
 
     useEffect(() => {
         const newCy = cytoscape({
@@ -42,32 +37,6 @@ const Graph = () => {
             if (cytoscapeData.elements.nodes) {
                 cytoscapeData.elements.nodes.forEach((element) => {
                     newCy.add(element);
-                    let node = newCy.nodes().last();
-                    let popper1 = node.popper({
-                        content: () => {
-                          return  makeDiv(node.id());
-                        },
-                        popper: {
-                            placement: 'bottom-start'
-                        }
-                      });
-
-                      let popper2 = node.popper({
-                        content: () => {
-                          return makeDiv(3)
-                        },
-                        popper: {
-                            placement: 'bottom-end'
-                        }
-                      });
-
-                      let update = () => {
-                        popper1.update();
-                        popper2.update();
-                      };
-                      
-                      node.on('position', update());
-                      newCy.on('pan zoom resize', update);
                 });
             }
             if (cytoscapeData.elements.edges) {
@@ -107,6 +76,14 @@ const Graph = () => {
             cy.remove(toDelete);
             dispatch(addState(cy.json(), currentIndex));
             dispatch(nextIndex());
+        });
+    } else if (toolbar.popper) {
+        cy.removeListener("tap");
+        cy.on("tap", (e) => {
+            if (e.target !== cy) {
+                dispatch(setDisplay("block"));
+                dispatch(setNewPopperPosition(e.target))
+            }
         });
     }
     return <div id="cy"></div>;

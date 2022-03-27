@@ -1,7 +1,8 @@
 const initialState = {
     node: false,
     edge: false,
-    eraser: false
+    eraser: false,
+    popper: false,
 };
 
 const toolbarReducer = (state = initialState, action) => {
@@ -22,6 +23,11 @@ const toolbarReducer = (state = initialState, action) => {
             return {
                 ...state,
                 eraser: true
+            }
+        case "SET_POPPER_ACTIVE":
+            return{
+                ...state,
+                popper: true
             }
         default:
             return state;
