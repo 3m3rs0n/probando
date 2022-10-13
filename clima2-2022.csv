@@ -1,0 +1,15 @@
+﻿Aspecto;temperatura;Humedad;Viento;jugar
+nublado;caliente;alta;debil;si
+nublado;frio;normal;fuerte;si
+nublado;tibio;alta;fuerte;si
+nublado;caliente;normal;debil;si
+lluvioso;tibio;alta;debil;si
+lluvioso;frio;normal;debil;si
+lluvioso;frio;normal;fuerte;no
+lluvioso;tibio;normal;debil;si
+lluvioso;tibio;alta;fuerte;no
+soleado;caliente;alta;debil;no
+soleado;caliente;alta;fuerte;no
+soleado;tibio;alta;debil;no
+soleado;frio;normal;debil;si
+soleado;tibio;normal;fuerte;si
